@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { products } from '../data/products';
-import { X, Minus, Plus, Trash2 } from 'lucide-react';
+import { X, Minus, Plus, Trash2, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 export const Cart: React.FC = () => {
   const {
@@ -21,7 +22,9 @@ export const Cart: React.FC = () => {
     comments: '',
   });
 
-  const [issubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!isCartOpen) return null;
 
@@ -40,52 +43,59 @@ export const Cart: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSending(true);
+    setError(null);
 
-    // Construct email body
+    // Construct email items list
     const itemsList = cartItems
       .map((item) => {
         const details = getProductDetails(item.id);
         return details
-          ? `- ${item.quantity}x ${details.name} (${details.price.toFixed(2)}€) = ${(
+          ? `${item.quantity}x ${details.name} (${details.price.toFixed(2)}€) = ${(
               item.quantity * details.price
             ).toFixed(2)}€`
           : '';
       })
+      .filter(Boolean)
       .join('\n');
 
-    const emailBody = `
-Nova Comanda de: ${formData.name}
-Email: ${formData.email}
-Telèfon: ${formData.phone}
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      comments: formData.comments,
+      items_list: itemsList,
+      total_amount: `${cartTotal.toFixed(2)}€`,
+      admin_email: import.meta.env.VITE_ADMIN_EMAIL,
+    };
 
-Comentaris:
-${formData.comments}
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
 
-Detall de la comanda:
-${itemsList}
-
-Total: ${cartTotal.toFixed(2)}€
-    `.trim();
-
-    const subject = `Comanda Latecador - ${formData.name}`;
-    const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-
-    // Open email client
-    window.location.href = mailtoLink;
-
-    // Show success state
-    setIsSubmitted(true);
-
-    // Optional: Clear cart after submission
-    // clearCart();
+      setIsSubmitted(true);
+      clearCart();
+    } catch (err) {
+      console.error('Error sending email:', err);
+      setError('S\'ha produït un error en enviar la comanda. Si us plau, torna-ho a intentar.');
+    } finally {
+      setIsSending(false);
+    }
   };
 
-  if (issubmitted) {
+  if (isSubmitted) {
     return (
       <div className="fixed inset-0 z-50 overflow-hidden">
-        <div className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={toggleCart}></div>
+        <div className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => {
+          setIsSubmitted(false);
+          toggleCart();
+        }}></div>
         <div className="fixed inset-y-0 right-0 max-w-full flex">
           <div className="w-screen max-w-md">
             <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
@@ -93,14 +103,13 @@ Total: ${cartTotal.toFixed(2)}€
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                   <span className="text-2xl">✅</span>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Comanda Generada!</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Comanda Enviada!</h2>
                 <p className="text-gray-600 mb-6">
-                  S'ha obert el teu gestor de correu per enviar la comanda.
+                  Hem rebut la teva comanda correctament. T'hem enviat un correu de confirmació a {formData.email}.
                 </p>
                 <button
                   onClick={() => {
                     setIsSubmitted(false);
-                    clearCart();
                     toggleCart();
                   }}
                   className="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-bold hover:bg-yellow-300 transition-colors"
@@ -204,8 +213,9 @@ Total: ${cartTotal.toFixed(2)}€
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  <p className="text-xs text-red-500 font-medium">* Camps obligatoris</p>
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nom</label>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nom *</label>
                     <input
                       type="text"
                       name="name"
@@ -217,7 +227,7 @@ Total: ${cartTotal.toFixed(2)}€
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email *</label>
                     <input
                       type="email"
                       name="email"
@@ -229,7 +239,7 @@ Total: ${cartTotal.toFixed(2)}€
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Telèfon</label>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Telèfon *</label>
                     <input
                       type="tel"
                       name="phone"
@@ -241,14 +251,16 @@ Total: ${cartTotal.toFixed(2)}€
                     />
                   </div>
                   <div>
-                    <label htmlFor="comments" className="block text-sm font-medium text-gray-700">Comentaris</label>
+                    <label htmlFor="comments" className="block text-sm font-medium text-gray-700">Comentaris *</label>
                     <textarea
                       name="comments"
                       id="comments"
                       rows={3}
+                      required
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm border p-2"
                       value={formData.comments}
                       onChange={handleInputChange}
+                      placeholder="Indica la data d'entrega/recollida i qualsevol altra informació"
                     />
                   </div>
 
@@ -256,12 +268,26 @@ Total: ${cartTotal.toFixed(2)}€
                     El pagament es realitzarà posteriorment. Se t'enviarà un correu amb els detalls.
                   </p>
 
+                  {error && (
+                    <div className="p-3 bg-red-50 text-red-700 text-sm rounded-md border border-red-200">
+                      {error}
+                    </div>
+                  )}
+
                   <div className="mt-6">
                     <button
                       type="submit"
-                      className="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-900 bg-yellow-400 hover:bg-yellow-300"
+                      disabled={isSending}
+                      className="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-900 bg-yellow-400 hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Enviar comanda
+                      {isSending ? (
+                        <>
+                          <Loader2 className="animate-spin mr-2" size={20} />
+                          Enviant...
+                        </>
+                      ) : (
+                        'Enviar comanda'
+                      )}
                     </button>
                   </div>
                 </form>
