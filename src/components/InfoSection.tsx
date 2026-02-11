@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Clock } from 'lucide-react';
 
 export const InfoSection: React.FC = () => {
@@ -33,8 +33,8 @@ export const InfoSection: React.FC = () => {
       <div className="flex items-start gap-6">
         <div className="flex-shrink-0">
           {/* Starburst Badge CSS */}
-          <div className="w-16 h-16 bg-yellow-400 relative flex items-center justify-center" 
-               style={{ clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' }}>
+          <div className="w-16 h-16 bg-yellow-400 relative flex items-center justify-center"
+            style={{ clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' }}>
           </div>
         </div>
         <div>

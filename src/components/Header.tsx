@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 export const Header: React.FC = () => {
   return (
@@ -13,22 +13,21 @@ export const Header: React.FC = () => {
 
       {/* Main Content */}
       <div className="absolute inset-0 flex flex-col justify-center pl-10 md:pl-20 w-2/3">
-        <div className="relative">
-          {/* Logo area */}
-          <div className="flex flex-col items-center relative">
-            {/* Cutting board icon simulation */}
-            <div className="absolute -top-12 sm:-top-16 opacity-90 transform -rotate-6">
-              <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-24 h-16 sm:w-32 sm:h-24">
-                <rect x="2" y="2" width="70" height="50" rx="8" fill="#FDE047" stroke="#FCD34D" strokeWidth="2" />
-                <path d="M72 25H85C87.7614 25 90 27.2386 90 30V35C90 37.7614 87.7614 40 85 40H72V25Z" fill="#FDE047" stroke="#FCD34D" strokeWidth="2" />
-                <circle cx="82" cy="32.5" r="3.5" fill="none" stroke="#F59E0B" strokeWidth="1.5" />
-              </svg>
-            </div>
+        <div className="flex flex-col md:flex-row items-center gap-6">
+          {/* Cutting board icon */}
+          <div className="transform -rotate-12 z-10 filter drop-shadow-md">
+            <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-24 h-16 sm:w-32 sm:h-24">
+              <rect x="2" y="2" width="70" height="50" rx="8" fill="#FCD34D" stroke="#B45309" strokeWidth="3" />
+              <path d="M72 25H85C87.7614 25 90 27.2386 90 30V35C90 37.7614 87.7614 40 85 40H72V25Z" fill="#FCD34D" stroke="#B45309" strokeWidth="3" />
+              <circle cx="82" cy="32.5" r="3.5" fill="none" stroke="#B45309" strokeWidth="2" />
+            </svg>
+          </div>
 
-            <h1 className="font-script text-7xl md:text-9xl text-gray-900 z-20 relative transform -rotate-2 drop-shadow-sm">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left z-20">
+            <h1 className="font-script text-7xl md:text-9xl text-gray-900 relative transform -rotate-2 drop-shadow-sm leading-none">
               La tecad'or
             </h1>
-            <h2 className="text-[#3b82f6] tracking-[0.2em] font-bold text-xs md:text-base mt-2 z-20 uppercase font-sans">
+            <h2 className="text-[#1e40af] tracking-[0.2em] font-bold text-xs md:text-lg mt-2 uppercase font-sans drop-shadow-sm">
               CÀTERING & ESDEVENIMENTS
             </h2>
           </div>
