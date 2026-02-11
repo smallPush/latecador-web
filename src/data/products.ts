@@ -1,3 +1,5 @@
+import productsData from './products.json';
+
 export interface ProductItem {
   id: string;
   name: string;
