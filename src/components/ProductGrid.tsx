@@ -36,6 +36,7 @@ const products: Product[] = [
   {
     title: 'PIZZES',
     imagePlaceholderColor: 'bg-red-100',
+    image: '/images/pizzas.png',
     items: [
       { name: 'Verdures' },
       { name: 'Pernil dolç' },
@@ -88,6 +89,7 @@ const products: Product[] = [
   {
     title: 'CANAPÈS',
     imagePlaceholderColor: 'bg-pink-100',
+    image: '/images/canapes.png',
     items: [
       { name: 'Safata gran (32 unitats)', price: '38€/safata' },
       { name: 'Safata petita (16 unitats)', price: '20€/safata' },
@@ -102,6 +104,57 @@ const products: Product[] = [
       { name: 'Safata gran (25 unitats aprox.)', price: '25€/safata' },
       { name: 'Safata petita (16 unitats aprox.)', price: '16€/safata' },
     ],
+  },
+  {
+    title: 'ALFAJORES',
+    imagePlaceholderColor: 'bg-yellow-50',
+    image: '/images/alfajores.png',
+    items: [
+      { name: 'Per unitats', price: '1,20€/unitat' },
+      { name: 'Caixa de 6 unitats', price: '6,50€/caixa' },
+      { name: 'Caixa de 12 unitats', price: '12,50€/caixa' },
+    ],
+  },
+  {
+    title: 'SAFATA DE DOLÇOS',
+    imagePlaceholderColor: 'bg-yellow-100',
+    image: '/images/safata_dolcos.png',
+    items: [
+      { name: 'Safata gran (25 unitats aprox.)', price: '18€/safata' },
+      { name: 'Safata petita (16 unitats aprox.)', price: '12,50€/safata' },
+    ],
+  },
+  {
+    title: 'PASTA FROLA',
+    imagePlaceholderColor: 'bg-orange-100',
+    image: '/images/pasta_frola.png',
+    items: [],
+    extraInfo: 'Dolç típic argentí de codony\n21,50€/unitat',
+  },
+  {
+    title: 'PASTISSOS',
+    imagePlaceholderColor: 'bg-yellow-50',
+    image: '/images/pastissos.png',
+    items: [
+      { name: 'A consultar varietats i preus' },
+    ],
+  },
+  {
+    title: 'COQUES\n(per a 8/10 persones)',
+    imagePlaceholderColor: 'bg-orange-50',
+    image: '/images/coques.png',
+    items: [
+      { name: 'Sense gluten', price: '28€/unitat' },
+      { name: 'Pa de pessic', price: '20€/unitat' },
+      { name: 'Vidre', price: '20€/unitat' },
+    ],
+  },
+  {
+    title: 'PIONONO DE DULCE DE LECHE',
+    imagePlaceholderColor: 'bg-yellow-200',
+    image: '/images/pionono.png',
+    items: [],
+    extraInfo: 'Dolç típic argentí Estil braç de gintano\n16€/unitat',
   },
 ];
 

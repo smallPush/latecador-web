@@ -2,6 +2,7 @@
 import { Header } from './components/Header';
 import { InfoSection } from './components/InfoSection';
 import { ProductGrid } from './components/ProductGrid';
+import { Footer } from './components/Footer';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <ProductGrid />
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
