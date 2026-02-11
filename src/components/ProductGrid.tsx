@@ -20,6 +20,8 @@ export const ProductGrid: React.FC = () => {
                 <img
                   src={product.image}
                   alt={product.title}
+                  width={product.imageWidth}
+                  height={product.imageHeight}
                   className="w-full h-full object-cover"
                 />
               ) : (

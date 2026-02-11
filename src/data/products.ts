@@ -9,6 +9,8 @@ export interface Product {
   id: string;
   title: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   imagePlaceholderColor: string;
   items: ProductItem[];
   extraInfo?: string;
@@ -20,6 +22,8 @@ export const products: Product[] = [
     title: 'CROQUETES',
     imagePlaceholderColor: 'bg-orange-100',
     image: '/images/croquetas.png',
+    imageWidth: 640,
+    imageHeight: 640,
     items: [
       { id: 'croquetes-rostit', name: 'Rostit de la iaia', price: 1.30, unit: 'unitat' },
       { id: 'croquetes-kimchie', name: 'Kimchie', price: 1.50, unit: 'unitat' },
@@ -31,6 +35,8 @@ export const products: Product[] = [
     title: 'EMPANADES ARGENTINES',
     imagePlaceholderColor: 'bg-yellow-100',
     image: '/images/empanadas.png',
+    imageWidth: 640,
+    imageHeight: 640,
     items: [
       { id: 'empanades-carn', name: 'Carn', price: 3.00, unit: 'unitat' },
       { id: 'empanades-tonyina', name: 'Tonyina', price: 2.75, unit: 'unitat' },
@@ -42,6 +48,8 @@ export const products: Product[] = [
     imagePlaceholderColor: 'bg-red-100',
     image: '/images/pizzas.png',
     extraInfo: '19,50€ (12-14 persones)',
+    imageWidth: 1088,
+    imageHeight: 960,
     items: [
       { id: 'pizzes-verdures', name: 'Verdures', price: 19.50, unit: 'unitat' },
       { id: 'pizzes-pernil', name: 'Pernil dolç', price: 19.50, unit: 'unitat' },
@@ -53,6 +61,8 @@ export const products: Product[] = [
     title: 'TRUITES',
     imagePlaceholderColor: 'bg-yellow-200',
     image: '/images/truites.png',
+    imageWidth: 640,
+    imageHeight: 640,
     items: [
       { id: 'truites-patata', name: 'Patata i ceba', price: 16.00, unit: 'unitat' },
     ],
@@ -62,6 +72,8 @@ export const products: Product[] = [
     title: 'ENTREPANS',
     imagePlaceholderColor: 'bg-yellow-300',
     image: '/images/entrepans.png',
+    imageWidth: 640,
+    imageHeight: 640,
     items: [
       { id: 'entrepans-minis', name: 'Minis', price: 1.20, unit: 'unitat' },
       { id: 'entrepans-minis-gourmet', name: 'Minis gourmet', price: 1.80, unit: 'unitat' },
@@ -75,6 +87,8 @@ export const products: Product[] = [
     imagePlaceholderColor: 'bg-red-200',
     image: '/images/barquetes.png',
     extraInfo: '1,20€/unitat\nsafata de 16 unitats 18€ (per unes 5 persones)',
+    imageWidth: 640,
+    imageHeight: 640,
     items: [
       { id: 'barquetes-butifarra-perol', name: 'Butifarra del Perol', price: 1.20, unit: 'unitat' },
       { id: 'barquetes-butifarra-negra', name: 'Butifarra negra', price: 1.20, unit: 'unitat' },
@@ -89,6 +103,8 @@ export const products: Product[] = [
     title: 'SAFATES (per 10 persones)',
     imagePlaceholderColor: 'bg-orange-200',
     image: '/images/safates.png',
+    imageWidth: 640,
+    imageHeight: 640,
     items: [
       { id: 'safates-embotits-mixta', name: 'Embotits mixta', price: 65.00, unit: 'safata' },
       { id: 'safates-embotits-iberics', name: 'Embotits amb ibèrics', price: 69.00, unit: 'safata' },
@@ -101,6 +117,8 @@ export const products: Product[] = [
     imagePlaceholderColor: 'bg-pink-100',
     image: '/images/canapes.png',
     extraInfo: 'A consultar les diferents varietats',
+    imageWidth: 1077,
+    imageHeight: 791,
     items: [
       { id: 'canapes-gran', name: 'Safata gran (32 unitats)', price: 38.00, unit: 'safata' },
       { id: 'canapes-petita', name: 'Safata petita (16 unitats)', price: 20.00, unit: 'safata' },
@@ -111,6 +129,8 @@ export const products: Product[] = [
     title: 'SAFATA SALADA VARIADA',
     imagePlaceholderColor: 'bg-orange-300',
     image: '/images/safata_salada.png',
+    imageWidth: 640,
+    imageHeight: 640,
     items: [
       { id: 'safata-salada-gran', name: 'Safata gran (25 unitats aprox.)', price: 25.00, unit: 'safata' },
       { id: 'safata-salada-petita', name: 'Safata petita (16 unitats aprox.)', price: 16.00, unit: 'safata' },
@@ -121,6 +141,8 @@ export const products: Product[] = [
     title: 'ALFAJORES',
     imagePlaceholderColor: 'bg-yellow-50',
     image: '/images/alfajores.png',
+    imageWidth: 1,
+    imageHeight: 1,
     items: [
       { id: 'alfajores-unitat', name: 'Per unitats', price: 1.20, unit: 'unitat' },
       { id: 'alfajores-caixa-6', name: 'Caixa de 6 unitats', price: 6.50, unit: 'caixa' },
@@ -132,6 +154,8 @@ export const products: Product[] = [
     title: 'SAFATA DE DOLÇOS',
     imagePlaceholderColor: 'bg-yellow-100',
     image: '/images/safata_dolcos.png',
+    imageWidth: 1,
+    imageHeight: 1,
     items: [
       { id: 'safata-dolcos-gran', name: 'Safata gran (25 unitats aprox.)', price: 18.00, unit: 'safata' },
       { id: 'safata-dolcos-petita', name: 'Safata petita (16 unitats aprox.)', price: 12.50, unit: 'safata' },
@@ -143,6 +167,8 @@ export const products: Product[] = [
     imagePlaceholderColor: 'bg-orange-100',
     image: '/images/pasta_frola.png',
     extraInfo: 'Dolç típic argentí de codony\n21,50€/unitat',
+    imageWidth: 1,
+    imageHeight: 1,
     items: [
       { id: 'pasta-frola', name: 'Pasta Frola', price: 21.50, unit: 'unitat' },
     ],
@@ -152,6 +178,8 @@ export const products: Product[] = [
     title: 'PASTISSOS',
     imagePlaceholderColor: 'bg-yellow-50',
     image: '/images/pastissos.png',
+    imageWidth: 1,
+    imageHeight: 1,
     items: [
       { id: 'pastissos-varietats', name: 'A consultar varietats i preus', price: 0, unit: 'unitat' },
     ],
@@ -161,6 +189,8 @@ export const products: Product[] = [
     title: 'COQUES\n(per a 8/10 persones)',
     imagePlaceholderColor: 'bg-orange-50',
     image: '/images/coques.png',
+    imageWidth: 1,
+    imageHeight: 1,
     items: [
       { id: 'coques-gluten-free', name: 'Sense gluten', price: 28.00, unit: 'unitat' },
       { id: 'coques-pa-pessic', name: 'Pa de pessic', price: 20.00, unit: 'unitat' },
@@ -173,6 +203,8 @@ export const products: Product[] = [
     imagePlaceholderColor: 'bg-yellow-200',
     image: '/images/pionono.png',
     extraInfo: 'Dolç típic argentí Estil braç de gintano\n16€/unitat',
+    imageWidth: 1,
+    imageHeight: 1,
     items: [
       { id: 'pionono', name: 'Pionono', price: 16.00, unit: 'unitat' },
     ],
