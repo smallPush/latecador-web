@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { products } from '../data/products';
-import { X, Minus, Plus, Trash2, Loader2 } from 'lucide-react';
+import { X, Minus, Plus, Trash2, Loader2, ShoppingBag, CheckCircle2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { sendTelegramMessage } from '../services/telegram';
 
@@ -97,7 +97,6 @@ ${itemsList}
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
     try {
-      // Send Email only if configured
       if (serviceId && templateId && publicKey) {
         await emailjs.send(
           serviceId,
@@ -105,13 +104,8 @@ ${itemsList}
           templateParams,
           publicKey
         );
-      } else {
-        console.log('EmailJS not configured, skipping email.');
       }
-
-      // Send Telegram (fire and forget, don't block on error)
       sendTelegramMessage(telegramMessage).catch(err => console.error('Telegram error:', err));
-
       setIsSubmitted(true);
       clearCart();
     } catch (err) {
@@ -124,34 +118,28 @@ ${itemsList}
 
   if (isSubmitted) {
     return (
-      <div className="fixed inset-0 z-50 overflow-hidden">
-        <div className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => {
+      <div className="fixed inset-0 z-50 overflow-hidden flex items-center justify-center p-6">
+        <div className="absolute inset-0 bg-brand-900/40 backdrop-blur-sm transition-opacity" onClick={() => {
           setIsSubmitted(false);
           toggleCart();
         }}></div>
-        <div className="fixed inset-y-0 right-0 max-w-full flex">
-          <div className="w-screen max-w-md">
-            <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
-              <div className="p-6 flex flex-col items-center justify-center h-full text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-2xl">✅</span>
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Comanda Enviada!</h2>
-                <p className="text-gray-600 mb-6">
-                  Hem rebut la teva comanda correctament. T'enviarem un email de confirmació a {formData.email}.
-                </p>
-                <button
-                  onClick={() => {
-                    setIsSubmitted(false);
-                    toggleCart();
-                  }}
-                  className="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-bold hover:bg-yellow-300 transition-colors"
-                >
-                  Tancar
-                </button>
-              </div>
-            </div>
+        <div className="relative bg-white w-full max-w-lg rounded-[3rem] shadow-2xl overflow-hidden p-12 text-center">
+          <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-8 mx-auto border border-green-100">
+            <CheckCircle2 className="w-10 h-10 text-green-500" />
           </div>
+          <h2 className="font-serif text-4xl text-brand-900 mb-4 text-center">Comanda enviada amb èxit!</h2>
+          <p className="text-brand-600 mb-10 text-lg">
+            Hem rebut la teva comanda correctament. T'enviarem un correu de confirmació a <span className="font-bold text-brand-900">{formData.email}</span> aviat.
+          </p>
+          <button
+            onClick={() => {
+              setIsSubmitted(false);
+              toggleCart();
+            }}
+            className="w-full bg-brand-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gold-500 transition-all shadow-lg uppercase tracking-widest text-sm"
+          >
+            Tancar la cistella
+          </button>
         </div>
       </div>
     );
@@ -159,189 +147,200 @@ ${itemsList}
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
-      <div className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={toggleCart}></div>
+      <div className="absolute inset-0 bg-brand-900/40 backdrop-blur-sm transition-opacity" onClick={toggleCart}></div>
 
       <div className="fixed inset-y-0 right-0 max-w-full flex">
-        <div className="w-screen max-w-md">
-          <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
-            <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
-              <div className="flex items-start justify-between">
-                <h2 className="text-lg font-medium text-gray-900">La teva cistella</h2>
-                <div className="ml-3 h-7 flex items-center">
-                  <button
-                    type="button"
-                    className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                    onClick={toggleCart}
-                  >
-                    <span className="sr-only">Tancar</span>
-                    <X className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
+        <div className="w-screen max-w-xl">
+          <div className="h-full flex flex-col bg-brand-50 shadow-2xl relative">
+            {/* Header */}
+            <div className="px-8 py-8 flex items-center justify-between border-b border-brand-200">
+              <div className="flex items-center gap-3">
+                <ShoppingBag className="text-brand-900" size={24} />
+                <h2 className="font-serif text-3xl text-brand-900">La teva cistella</h2>
               </div>
+              <button
+                type="button"
+                className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-brand-200 text-brand-500 transition-colors"
+                onClick={toggleCart}
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
 
-              <div className="mt-8">
-                <div className="flow-root">
-                  <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {cartItems.length === 0 ? (
-                      <li className="py-6 text-center text-gray-500">
-                        No hi ha productes a la cistella.
-                      </li>
-                    ) : (
-                      cartItems.map((item) => {
-                        const details = getProductDetails(item.id);
-                        if (!details) return null;
-                        return (
-                          <li key={item.id} className="py-6 flex">
-                            <div className="flex-1 flex flex-col">
-                              <div>
-                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                  <h3>{details.name}</h3>
-                                  <p className="ml-4">{(details.price * item.quantity).toFixed(2)}€</p>
-                                </div>
-                                <p className="mt-1 text-sm text-gray-500">{details.price.toFixed(2)}€ / unit</p>
+            {/* List */}
+            <div className="flex-1 overflow-y-auto px-8 py-8">
+              <div className="flow-root">
+                <ul className="space-y-8">
+                  {cartItems.length === 0 ? (
+                    <li className="py-12 flex flex-col items-center justify-center text-center">
+                      <div className="w-20 h-20 bg-brand-100 rounded-full flex items-center justify-center mb-6 opacity-50">
+                        <ShoppingBag className="text-brand-400" size={32} />
+                      </div>
+                      <p className="text-brand-500 font-serif text-xl">
+                        Encara no hi ha productes.
+                      </p>
+                    </li>
+                  ) : (
+                    cartItems.map((item) => {
+                      const details = getProductDetails(item.id);
+                      if (!details) return null;
+                      return (
+                        <li key={item.id} className="flex gap-6 group">
+                          <div className="flex-shrink-0 w-24 h-24 bg-brand-200 rounded-2xl overflow-hidden border border-brand-200">
+                            {details.image ? (
+                              <img src={details.image} alt={details.name} className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-brand-300">
+                                <ShoppingBag size={24} />
                               </div>
-                              <div className="flex-1 flex items-end justify-between text-sm">
-                                <div className="flex items-center border rounded-md">
-                                  <button
-                                    className="p-1 hover:bg-gray-100"
-                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                  >
-                                    <Minus size={16} />
-                                  </button>
-                                  <span className="px-2 font-medium">{item.quantity}</span>
-                                  <button
-                                    className="p-1 hover:bg-gray-100"
-                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                  >
-                                    <Plus size={16} />
-                                  </button>
-                                </div>
-
-                                <div className="flex">
-                                  <button
-                                    type="button"
-                                    className="font-medium text-red-600 hover:text-red-500 flex items-center"
-                                    onClick={() => removeFromCart(item.id)}
-                                  >
-                                    <Trash2 size={16} className="mr-1" />
-                                    Eliminar
-                                  </button>
-                                </div>
-                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1 flex flex-col pt-1">
+                            <div className="flex justify-between items-start mb-2">
+                              <h3 className="font-bold text-brand-900 text-lg leading-tight">{details.name}</h3>
+                              <p className="text-brand-900 font-bold">{(details.price * item.quantity).toFixed(2)}€</p>
                             </div>
-                          </li>
-                        );
-                      })
-                    )}
-                  </ul>
-                </div>
+
+                            <div className="flex items-center justify-between mt-auto">
+                              <div className="flex items-center bg-white rounded-full p-1 border border-brand-200 shadow-sm scale-90 -ml-2">
+                                <button
+                                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-brand-50 text-brand-600 transition-all"
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                >
+                                  <Minus size={14} />
+                                </button>
+                                <span className="px-3 font-bold text-brand-900 min-w-[1.5rem] text-center">{item.quantity}</span>
+                                <button
+                                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-brand-50 text-brand-600 transition-all"
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                >
+                                  <Plus size={14} />
+                                </button>
+                              </div>
+
+                              <button
+                                type="button"
+                                className="text-red-400 hover:text-red-600 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 transition-colors"
+                                onClick={() => removeFromCart(item.id)}
+                              >
+                                <Trash2 size={14} />
+                                Eliminar
+                              </button>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })
+                  )}
+                </ul>
               </div>
             </div>
 
+            {/* Checkout Section */}
             {cartItems.length > 0 && (
-              <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                <div className="flex justify-between text-base font-medium text-gray-900 mb-4">
-                  <p>Subtotal</p>
-                  <p>{cartTotal.toFixed(2)}€</p>
+              <div className="bg-white border-t border-brand-200 p-8 shadow-[0_-15px_30px_-15px_rgba(0,0,0,0.05)]">
+                <div className="flex justify-between items-baseline mb-8">
+                  <p className="font-serif text-2xl text-brand-900">Total comanda</p>
+                  <p className="font-serif text-4xl text-brand-900 font-black">{cartTotal.toFixed(2)}€</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <p className="text-xs text-red-500 font-medium">* Camps obligatoris</p>
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nom *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm border p-2"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                    />
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-1.5">
+                      <label htmlFor="name" className="text-xs font-black uppercase tracking-widest text-brand-400 ml-1">Nom Complet *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        required
+                        placeholder="El vostre nom"
+                        className="block w-full rounded-2xl border-brand-200 bg-brand-50 shadow-sm focus:border-gold-400 focus:ring-gold-400 sm:text-sm border-2 p-3 transition-all outline-none"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label htmlFor="phone" className="text-xs font-black uppercase tracking-widest text-brand-400 ml-1">Telèfon *</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        required
+                        placeholder="600 00 00 00"
+                        className="block w-full rounded-2xl border-brand-200 bg-brand-50 shadow-sm focus:border-gold-400 focus:ring-gold-400 sm:text-sm border-2 p-3 transition-all outline-none"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email *</label>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="email" className="text-xs font-black uppercase tracking-widest text-brand-400 ml-1">Correu electrònic *</label>
                     <input
                       type="email"
                       name="email"
                       id="email"
                       required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm border p-2"
+                      placeholder="hola@exemple.cat"
+                      className="block w-full rounded-2xl border-brand-200 bg-brand-50 shadow-sm focus:border-gold-400 focus:ring-gold-400 sm:text-sm border-2 p-3 transition-all outline-none"
                       value={formData.email}
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Telèfon *</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      id="phone"
-                      required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm border p-2"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="comments" className="block text-sm font-medium text-gray-700">Comentaris *</label>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="comments" className="text-xs font-black uppercase tracking-widest text-brand-400 ml-1">Comentaris i Data *</label>
                     <textarea
                       name="comments"
                       id="comments"
                       rows={3}
                       required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm border p-2"
+                      className="block w-full rounded-2xl border-brand-200 bg-brand-50 shadow-sm focus:border-gold-400 focus:ring-gold-400 sm:text-sm border-2 p-3 transition-all outline-none"
                       value={formData.comments}
                       onChange={handleInputChange}
-                      placeholder="Indica la data d'entrega/recollida i qualsevol altra informació"
+                      placeholder="Indiqueu la data d'entrega/recollida i preferències"
                     />
                   </div>
 
-                  <div className="flex items-start mt-4">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="gdpr"
-                        name="gdpr"
-                        type="checkbox"
-                        required
-                        className="focus:ring-yellow-500 h-4 w-4 text-yellow-600 border-gray-300 rounded cursor-pointer"
-                        checked={gdprAccepted}
-                        onChange={(e) => setGdprAccepted(e.target.checked)}
-                      />
-                    </div>
-                    <div className="ml-3 text-xs text-left">
-                      <label htmlFor="gdpr" className="text-gray-600 cursor-pointer">
-                        Accepto que les meves dades siguin tractades per gestionar la comanda segons la política de privadesa (GDPR).
-                      </label>
-                    </div>
+                  <div className="flex items-start gap-3 py-2">
+                    <input
+                      id="gdpr"
+                      name="gdpr"
+                      type="checkbox"
+                      required
+                      className="mt-1 h-5 w-5 rounded-lg border-brand-300 text-brand-900 focus:ring-gold-400 transition-colors cursor-pointer"
+                      checked={gdprAccepted}
+                      onChange={(e) => setGdprAccepted(e.target.checked)}
+                    />
+                    <label htmlFor="gdpr" className="text-xs text-brand-500 leading-snug cursor-pointer font-medium">
+                      Accepto que les meves dades siguin tractades per gestionar la comanda segons la política de privadesa (GDPR).
+                    </label>
                   </div>
 
-                  <p className="mt-0.5 text-sm text-gray-500 text-left">
-                    El pagament es realitzarà posteriorment. Se t'enviarà un correu amb els detalls.
-                  </p>
-
                   {error && (
-                    <div className="p-3 bg-red-50 text-red-700 text-sm rounded-md border border-red-200">
+                    <div className="p-4 bg-red-50 text-red-700 text-xs font-bold rounded-2xl border border-red-100 flex items-center gap-2">
+                      <X size={14} className="flex-shrink-0" />
                       {error}
                     </div>
                   )}
 
-                  <div className="mt-6">
-                    <button
-                      type="submit"
-                      disabled={isSending}
-                      className="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-900 bg-yellow-400 hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSending ? (
-                        <>
-                          <Loader2 className="animate-spin mr-2" size={20} />
-                          Enviant...
-                        </>
-                      ) : (
-                        'Enviar comanda'
-                      )}
-                    </button>
-                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSending}
+                    className="w-full flex justify-center items-center px-8 py-5 rounded-full shadow-2xl text-sm font-black uppercase tracking-[0.2em] text-white bg-brand-900 hover:bg-gold-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
+                  >
+                    {isSending ? (
+                      <>
+                        <Loader2 className="animate-spin mr-3" size={20} />
+                        Enviant comanda...
+                      </>
+                    ) : (
+                      'Enviar comanda'
+                    )}
+                  </button>
+                  <p className="text-[10px] text-center text-brand-400 uppercase tracking-widest font-bold">
+                    El pagament es realitzarà posteriorment via transferència o bizum.
+                  </p>
                 </form>
               </div>
             )}

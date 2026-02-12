@@ -1,112 +1,109 @@
 import React from 'react';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, ShoppingBag } from 'lucide-react';
 
 export const ProductGrid: React.FC = () => {
   const { addToCart, getItemQuantity, updateQuantity } = useCart();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pb-20">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <section className="max-w-7xl mx-auto px-6 pb-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
         {products.map((product) => (
-          <div key={product.id} className="flex flex-col items-center">
-            {/* Top Line */}
-            <div className="w-24 h-1 bg-yellow-400 mb-6"></div>
-
+          <div key={product.id} className="flex flex-col group">
             {/* Image Area with Badge */}
-            <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-lg mb-6 group">
+            <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-sm group-hover:shadow-xl transition-all duration-500 mb-8 bg-brand-100">
               {product.image ? (
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               ) : (
-                <div className={`w-full h-full ${product.imagePlaceholderColor} flex items-center justify-center text-gray-500`}>
-                  <span className="text-lg font-semibold">{product.title} Image</span>
+                <div className={`w-full h-full ${product.imagePlaceholderColor} flex items-center justify-center text-brand-400 opacity-50`}>
+                  <ShoppingBag size={48} strokeWidth={1} />
                 </div>
               )}
 
-              {/* Star Badge */}
+              {/* Sophisticated Star Badge */}
               {product.featured && (
-                <div
-                  className="absolute top-0 left-0 -mt-2 -ml-2 w-12 h-12 bg-yellow-400 z-10"
-                  style={{
-                    clipPath:
-                      'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-                  }}
-                ></div>
+                <div className="absolute top-6 left-6 bg-gold-400 text-brand-900 px-3 py-1 rounded-full text-[0.65rem] font-black uppercase tracking-widest shadow-lg">
+                  Recomanat
+                </div>
               )}
+
+              {/* Overlay on hover */}
+              <div className="absolute inset-0 bg-brand-900/10 group-hover:bg-brand-900/0 transition-colors duration-500"></div>
             </div>
 
-            {/* Title */}
-            <h3 className="text-gray-700 font-bold text-xl uppercase mb-4 text-center whitespace-pre-line">
-              {product.title.replace(' ', '\n')}
-            </h3>
+            {/* Content */}
+            <div className="flex flex-col flex-grow px-2">
+              <h3 className="font-serif text-3xl text-brand-900 mb-6 leading-tight group-hover:text-gold-500 transition-colors">
+                {product.title}
+              </h3>
 
-            {/* Items List */}
-            <ul className="text-center space-y-4 mb-4 w-full px-4">
-              {product.items.map((item) => {
-                const quantity = getItemQuantity(item.id);
-                return (
-                  <li key={item.id} className="text-gray-800 flex flex-col items-center">
-                    <span className="font-medium">• {item.name}</span>
-                    {item.price > 0 && (
-                      <div className="text-blue-400 font-bold text-sm mb-1">
-                        {item.price.toFixed(2)}€
-                        {item.unit && `/${item.unit}`}
-                      </div>
-                    )}
-
-                    {/* Quantity Controls */}
-                    {item.price > 0 ? (
-                      <div className="flex items-center justify-center mt-1 space-x-2">
-                        {quantity > 0 ? (
-                          <div className="flex items-center border border-gray-300 rounded-full bg-white overflow-hidden shadow-sm">
-                            <button
-                              onClick={() => updateQuantity(item.id, quantity - 1)}
-                              className="p-1 px-3 hover:bg-gray-100 text-gray-600 transition-colors"
-                            >
-                              <Minus size={14} />
-                            </button>
-                            <span className="px-2 font-bold text-gray-800 min-w-[1.5rem] text-center">{quantity}</span>
-                            <button
-                              onClick={() => addToCart(item.id)}
-                              className="p-1 px-3 hover:bg-gray-100 text-gray-600 transition-colors"
-                            >
-                              <Plus size={14} />
-                            </button>
-                          </div>
-                        ) : (
-                          <button
-                            onClick={() => addToCart(item.id)}
-                            className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 text-xs font-bold py-1 px-4 rounded-full shadow-sm transition-colors"
-                          >
-                            Afegir
-                          </button>
+              {/* Items List */}
+              <div className="space-y-6 mb-8 flex-grow">
+                {product.items.map((item) => {
+                  const quantity = getItemQuantity(item.id);
+                  return (
+                    <div key={item.id} className="flex items-start justify-between gap-4 border-b border-brand-100 pb-4 last:border-0 last:pb-0">
+                      <div className="flex flex-col">
+                        <span className="text-brand-800 font-medium">{item.name}</span>
+                        {item.price > 0 && (
+                          <span className="text-brand-500 text-sm font-semibold mt-0.5">
+                            {item.price.toFixed(2)}€
+                            {item.unit && <span className="text-brand-400 font-normal"> / {item.unit}</span>}
+                          </span>
                         )}
                       </div>
-                    ) : (
-                      <span className="text-xs text-gray-500 italic">Consultar</span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
 
-            {/* Extra Info */}
-            {product.extraInfo && (
-              <div className="text-blue-400 font-bold text-sm mt-2 text-center whitespace-pre-line">
-                {product.extraInfo}
+                      {/* Quantity Controls */}
+                      <div className="flex-shrink-0 pt-1">
+                        {item.price > 0 ? (
+                          quantity > 0 ? (
+                            <div className="flex items-center bg-brand-100 rounded-full p-1 border border-brand-200 shadow-inner">
+                              <button
+                                onClick={() => updateQuantity(item.id, quantity - 1)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white text-brand-600 transition-all shadow-sm active:scale-95"
+                              >
+                                <Minus size={14} />
+                              </button>
+                              <span className="px-3 font-bold text-brand-900 min-w-[2rem] text-center">{quantity}</span>
+                              <button
+                                onClick={() => addToCart(item.id)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white text-brand-600 transition-all shadow-sm active:scale-95"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => addToCart(item.id)}
+                              className="bg-brand-900 hover:bg-gold-500 text-white text-xs font-bold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95 uppercase tracking-widest"
+                            >
+                              Afegir
+                            </button>
+                          )
+                        ) : (
+                          <span className="text-[0.65rem] text-brand-400 uppercase font-bold tracking-widest">Consultar</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            )}
 
-            {/* Bottom Line */}
-            <div className="w-full h-1 bg-yellow-400 mt-auto pt-1"></div>
+              {/* Extra Info */}
+              {product.extraInfo && (
+                <div className="bg-brand-100/50 p-4 rounded-2xl text-brand-600 text-sm italic mb-4 border border-brand-100">
+                  {product.extraInfo}
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };

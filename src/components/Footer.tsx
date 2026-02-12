@@ -1,65 +1,80 @@
-import { Mail, Instagram } from 'lucide-react';
+import { Mail, Instagram, Phone } from 'lucide-react';
 
 export const Footer = () => {
   return (
-    <footer className="w-full bg-gray-50 pt-16 pb-12 px-4 border-t border-gray-200">
-      <div className="max-w-6xl mx-auto">
-        <div className="relative overflow-hidden bg-gradient-to-r from-yellow-300 to-orange-300 rounded-2xl shadow-xl flex flex-col md:flex-row">
-          
+    <footer className="w-full bg-brand-900 pt-24 pb-12 px-6 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
           {/* Left Content Section */}
-          <div className="flex-1 p-8 md:p-12 z-20">
-            <h3 className="font-script text-4xl md:text-5xl text-gray-900 mb-4 transform -rotate-1">
-              Tens una idea? Explican's-la!!
+          <div className="flex flex-col">
+            <h3 className="font-serif text-5xl md:text-7xl text-white mb-8 leading-tight">
+              Tens una idea? <br />
+              <span className="italic text-brand-300">Explica'ns-la.</span>
             </h3>
-            <p className="font-bold text-gray-800 text-sm md:text-lg max-w-md leading-relaxed">
+            <p className="text-brand-200 text-lg md:text-xl max-w-md leading-relaxed mb-12">
               Es fan adaptacions per al·lèrgies i intoleràncies,
-              i pressupostos personalitzats.
+              i pressupostos personalitzats segons les teves necessitats.
             </p>
-            
-            <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <span className="bg-[#1e40af] text-white px-4 py-1 text-xs font-black uppercase tracking-widest rounded">
+
+            <div className="flex items-center gap-6">
+              <a
+                href="https://instagram.com/latecador3"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold-400 hover:text-brand-900 transition-all duration-300 hover:-translate-y-1"
+              >
+                <Instagram size={24} />
+              </a>
+              <a
+                href="mailto:latecador@gmail.com"
+                className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold-400 hover:text-brand-900 transition-all duration-300 hover:-translate-y-1"
+              >
+                <Mail size={24} />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Contact Card */}
+          <div className="bg-brand-800/50 backdrop-blur-xl border border-white/5 p-10 md:p-16 rounded-[3rem] shadow-2xl relative">
+            <div className="absolute top-0 right-0 p-8 opacity-10">
+              <Phone size={120} />
+            </div>
+
+            <div className="relative z-10">
+              <span className="inline-block px-3 py-1 bg-gold-400 text-brand-900 text-[0.65rem] font-black uppercase tracking-[0.2em] rounded-full mb-6">
                 Parlem?
               </span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl md:text-4xl font-black text-gray-900">654 84 09 68</span>
-                <span className="font-bold text-orange-700 text-sm uppercase">(Anna)</span>
+              <div className="flex flex-col gap-2">
+                <p className="text-brand-300 text-sm uppercase tracking-widest font-bold">Contacte directe</p>
+                <a href="tel:+34654840968" className="text-4xl md:text-5xl font-serif text-white hover:text-gold-400 transition-colors">
+                  654 84 09 68
+                </a>
+                <p className="font-script text-2xl text-brand-200 mt-2">Atenció personalitzada per l'Anna</p>
+              </div>
+
+              <div className="h-px w-full bg-white/10 my-10"></div>
+
+              <div className="flex flex-col gap-1">
+                <p className="text-brand-300 text-xs uppercase tracking-widest font-bold">Correu electrònic</p>
+                <p className="text-white font-medium text-lg">latecador@gmail.com</p>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Right Geometric Section (Matching Header) */}
-          <div 
-            className="md:w-[35%] bg-gray-100 flex flex-col justify-center items-center p-8 md:p-12 z-10"
-            style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }}
-          >
-            <div className="flex flex-col gap-6 w-full">
-              <a href="mailto:latecador@gmail.com" className="group flex items-center gap-4 transition-transform hover:scale-105">
-                <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-200 group-hover:border-blue-400 transition-colors">
-                  <Mail className="w-6 h-6 text-[#1e40af]" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[0.65rem] uppercase tracking-widest text-gray-500 font-bold">Email</span>
-                  <span className="font-bold text-gray-800 text-sm md:text-base break-all">latecador@gmail.com</span>
-                </div>
-              </a>
-
-              <a href="https://instagram.com/latecador3" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 transition-transform hover:scale-105">
-                <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-200 group-hover:border-pink-400 transition-colors">
-                  <Instagram className="w-6 h-6 text-[#E4405F]" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[0.65rem] uppercase tracking-widest text-gray-500 font-bold">Instagram</span>
-                  <span className="font-bold text-gray-800 text-sm md:text-base">@latecador3</span>
-                </div>
-              </a>
-            </div>
+        <div className="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="font-serif text-2xl text-white">
+            La teca <span className="italic text-brand-300">d'or</span>
+          </div>
+          <div className="text-brand-400 text-xs font-bold uppercase tracking-[0.3em] text-center md:text-right">
+            &copy; {new Date().getFullYear()} — L'Ametlla del Vallès
           </div>
         </div>
-        
-        <div className="mt-12 text-center text-gray-400 text-xs font-bold uppercase tracking-[0.2em]">
-          &copy; {new Date().getFullYear()} La tecad'or — Càtering & Esdeveniments
-        </div>
       </div>
+
+      {/* Decorative Gradient Blur */}
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-gold-400/10 rounded-full blur-[100px] pointer-events-none"></div>
     </footer>
   );
 };
