@@ -4,7 +4,10 @@
     "title": "CROQUETES",
     "featured": true,
     "imagePlaceholderColor": "bg-orange-100",
-    "image": "/images/croquetas.png",
+    "images": [
+      "/images/croquetas.png",
+      "/images/croquetas2.png"
+    ],
     "items": [
       {
         "id": "croquetes-rostit",
