@@ -7,6 +7,10 @@ import { Plus, Minus, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-reac
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const { addToCart, getItemQuantity, updateQuantity } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 50;
 
   const images = product.images || (product.image ? [product.image] : []);
   const hasMultipleImages = images.length > 1;
@@ -23,10 +27,37 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    } else if (isRightSwipe) {
+      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
+  };
+
   return (
     <div className="flex flex-col group">
       {/* Image Area with Badge */}
-      <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-sm group-hover:shadow-xl transition-all duration-500 mb-8 bg-brand-100">
+      <div
+        className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-sm group-hover:shadow-xl transition-all duration-500 mb-8 bg-brand-100"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         {images.length > 0 ? (
           <>
             <img
