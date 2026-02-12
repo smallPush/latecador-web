@@ -338,7 +338,10 @@
     "title": "COQUES\n(per a 8/10 persones)",
     "featured": false,
     "imagePlaceholderColor": "bg-orange-50",
-    "image": "/images/coques.png",
+    "images": [
+      "/images/coques.png",
+      "/images/coques2.png"
+    ],
     "items": [
       {
         "id": "coques-gluten-free",
