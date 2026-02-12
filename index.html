@@ -1,16 +1,97 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <title>latecador-web</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="ca">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Basic -->
+  <title>La teca d'or — Càtering & Esdeveniments | l'Ametlla del Vallès</title>
+  <meta name="description"
+    content="Servei de càtering casolà a l'Ametlla del Vallès. Croquetes, empanades argentines, pizzes, entrepans, safates, pastissos i molt més. Comandes amb 3 dies d'antelació. Truqueu al 654 84 09 68." />
+  <meta name="keywords"
+    content="càtering, esdeveniments, menjar casolà, croquetes, empanades argentines, pizzes, entrepans, pastissos, safates, l'Ametlla del Vallès, Vallès Oriental, La teca d'or, latecador" />
+  <meta name="author" content="La teca d'or" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://latecador.cat/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://latecador.cat/" />
+  <meta property="og:title" content="La teca d'or — Càtering & Esdeveniments" />
+  <meta property="og:description"
+    content="Servei de càtering casolà a l'Ametlla del Vallès. Croquetes, empanades, pizzes, safates, pastissos i molt més. Producte d'elaboració pròpia!" />
+  <meta property="og:image" content="https://latecador.cat/images/canapes.png" />
+  <meta property="og:locale" content="ca_ES" />
+  <meta property="og:site_name" content="La teca d'or" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="La teca d'or — Càtering & Esdeveniments" />
+  <meta name="twitter:description"
+    content="Servei de càtering casolà a l'Ametlla del Vallès. Croquetes, empanades, pizzes, safates, pastissos i molt més." />
+  <meta name="twitter:image" content="https://latecador.cat/images/canapes.png" />
+
+  <!-- Theme & Favicon -->
+  <meta name="theme-color" content="#FBBF24" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FoodEstablishment",
+      "name": "La teca d'or",
+      "description": "Servei de càtering casolà i esdeveniments a l'Ametlla del Vallès. Producte d'elaboració pròpia.",
+      "url": "https://latecador.cat",
+      "telephone": "+34654840968",
+      "email": "latecador@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "L'Ametlla del Vallès",
+        "addressRegion": "Vallès Oriental",
+        "addressCountry": "ES"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "14:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "16:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "14:00"
+        }
+      ],
+      "servesCuisine": ["Catalana", "Argentina"],
+      "priceRange": "€",
+      "image": "https://latecador.cat/images/canapes.png",
+      "sameAs": [
+        "https://instagram.com/latecador3"
+      ]
+    }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

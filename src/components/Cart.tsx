@@ -138,7 +138,7 @@ ${itemsList}
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Comanda Enviada!</h2>
                 <p className="text-gray-600 mb-6">
-                  Hem rebut la teva comanda correctament. T'hem enviat un correu de confirmació a {formData.email}.
+                  Hem rebut la teva comanda correctament. T'enviarem un email de confirmació a {formData.email}.
                 </p>
                 <button
                   onClick={() => {

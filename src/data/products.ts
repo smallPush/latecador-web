@@ -12,6 +12,7 @@ export interface Product {
   title: string;
   image?: string;
   imagePlaceholderColor: string;
+  featured?: boolean;
   items: ProductItem[];
   extraInfo?: string;
 }

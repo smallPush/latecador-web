@@ -29,13 +29,15 @@ export const ProductGrid: React.FC = () => {
               )}
 
               {/* Star Badge */}
-              <div
-                className="absolute top-0 left-0 -mt-2 -ml-2 w-12 h-12 bg-yellow-400 z-10"
-                style={{
-                  clipPath:
-                    'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-                }}
-              ></div>
+              {product.featured && (
+                <div
+                  className="absolute top-0 left-0 -mt-2 -ml-2 w-12 h-12 bg-yellow-400 z-10"
+                  style={{
+                    clipPath:
+                      'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
+                  }}
+                ></div>
+              )}
             </div>
 
             {/* Title */}
@@ -60,33 +62,33 @@ export const ProductGrid: React.FC = () => {
                     {/* Quantity Controls */}
                     {item.price > 0 ? (
                       <div className="flex items-center justify-center mt-1 space-x-2">
-                         {quantity > 0 ? (
-                           <div className="flex items-center border border-gray-300 rounded-full bg-white overflow-hidden shadow-sm">
-                             <button
-                               onClick={() => updateQuantity(item.id, quantity - 1)}
-                               className="p-1 px-3 hover:bg-gray-100 text-gray-600 transition-colors"
-                             >
-                               <Minus size={14} />
-                             </button>
-                             <span className="px-2 font-bold text-gray-800 min-w-[1.5rem] text-center">{quantity}</span>
-                             <button
-                               onClick={() => addToCart(item.id)}
-                               className="p-1 px-3 hover:bg-gray-100 text-gray-600 transition-colors"
-                             >
-                               <Plus size={14} />
-                             </button>
-                           </div>
-                         ) : (
-                           <button
-                             onClick={() => addToCart(item.id)}
-                             className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 text-xs font-bold py-1 px-4 rounded-full shadow-sm transition-colors"
-                           >
-                             Afegir
-                           </button>
-                         )}
+                        {quantity > 0 ? (
+                          <div className="flex items-center border border-gray-300 rounded-full bg-white overflow-hidden shadow-sm">
+                            <button
+                              onClick={() => updateQuantity(item.id, quantity - 1)}
+                              className="p-1 px-3 hover:bg-gray-100 text-gray-600 transition-colors"
+                            >
+                              <Minus size={14} />
+                            </button>
+                            <span className="px-2 font-bold text-gray-800 min-w-[1.5rem] text-center">{quantity}</span>
+                            <button
+                              onClick={() => addToCart(item.id)}
+                              className="p-1 px-3 hover:bg-gray-100 text-gray-600 transition-colors"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => addToCart(item.id)}
+                            className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 text-xs font-bold py-1 px-4 rounded-full shadow-sm transition-colors"
+                          >
+                            Afegir
+                          </button>
+                        )}
                       </div>
                     ) : (
-                       <span className="text-xs text-gray-500 italic">Consultar</span>
+                      <span className="text-xs text-gray-500 italic">Consultar</span>
                     )}
                   </li>
                 );
