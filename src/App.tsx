@@ -1,3 +1,5 @@
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Header } from './components/Header';
 import { InfoSection } from './components/InfoSection';
 import { AboutSection } from './components/AboutSection';
@@ -5,31 +7,67 @@ import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
 import { Cart } from './components/Cart';
 import { CookieBanner } from './components/CookieBanner';
+import { Specialties } from './components/Specialties';
 import { useCart } from './context/CartContext';
 import { ShoppingCart } from 'lucide-react';
+
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+    } else {
+      const element = document.querySelector(hash);
+      if (element) {
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [pathname, hash]);
+
+  return null;
+}
+
+function HomePage() {
+  return (
+    <main>
+      <div id="about">
+        <AboutSection />
+      </div>
+
+      <div id="info">
+        <InfoSection />
+      </div>
+
+      <div id="menu">
+        <div className="container mx-auto px-6 py-12">
+          <h2 className="font-serif text-5xl md:text-6xl text-brand-900 mb-12 text-center">El nostre <span className="italic text-brand-400">Menú</span></h2>
+          <ProductGrid />
+        </div>
+      </div>
+    </main>
+  );
+}
 
 function App() {
   const { toggleCart, cartCount } = useCart();
 
   return (
     <div className="min-h-screen bg-brand-50 font-sans relative">
+      <ScrollToTop />
       <Header />
-      <main>
-        <div id="about">
-          <AboutSection />
-        </div>
 
-        <div id="info">
-          <InfoSection />
-        </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/especialitats" element={<Specialties />} />
+      </Routes>
 
-        <div id="menu">
-          <div className="container mx-auto px-6 py-12">
-            <h2 className="font-serif text-5xl md:text-6xl text-brand-900 mb-12 text-center">El nostre <span className="italic text-brand-400">Menú</span></h2>
-            <ProductGrid />
-          </div>
-        </div>
-      </main>
       <Footer />
 
       {/* Floating Cart Button */}
