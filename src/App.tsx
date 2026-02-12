@@ -3,6 +3,7 @@ import { InfoSection } from './components/InfoSection';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
 import { Cart } from './components/Cart';
+import { CookieBanner } from './components/CookieBanner';
 import { useCart } from './context/CartContext';
 import { ShoppingCart } from 'lucide-react';
 
@@ -37,6 +38,7 @@ function App() {
       </button>
 
       <Cart />
+      <CookieBanner />
     </div>
   );
 }

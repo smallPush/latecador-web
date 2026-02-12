@@ -26,6 +26,7 @@ export const Cart: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [gdprAccepted, setGdprAccepted] = useState(false);
 
   if (!isCartOpen) return null;
 
@@ -46,6 +47,10 @@ export const Cart: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!gdprAccepted) {
+      setError('Has d\'acceptar la política de privadesa per continuar.');
+      return;
+    }
     setIsSending(true);
     setError(null);
 
@@ -87,14 +92,22 @@ ${itemsList}
 <b>Total: ${cartTotal.toFixed(2)}€</b>
     `.trim();
 
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
     try {
-      // Send Email
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
+      // Send Email only if configured
+      if (serviceId && templateId && publicKey) {
+        await emailjs.send(
+          serviceId,
+          templateId,
+          templateParams,
+          publicKey
+        );
+      } else {
+        console.log('EmailJS not configured, skipping email.');
+      }
 
       // Send Telegram (fire and forget, don't block on error)
       sendTelegramMessage(telegramMessage).catch(err => console.error('Telegram error:', err));
@@ -284,7 +297,26 @@ ${itemsList}
                     />
                   </div>
 
-                  <p className="mt-0.5 text-sm text-gray-500">
+                  <div className="flex items-start mt-4">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="gdpr"
+                        name="gdpr"
+                        type="checkbox"
+                        required
+                        className="focus:ring-yellow-500 h-4 w-4 text-yellow-600 border-gray-300 rounded cursor-pointer"
+                        checked={gdprAccepted}
+                        onChange={(e) => setGdprAccepted(e.target.checked)}
+                      />
+                    </div>
+                    <div className="ml-3 text-xs text-left">
+                      <label htmlFor="gdpr" className="text-gray-600 cursor-pointer">
+                        Accepto que les meves dades siguin tractades per gestionar la comanda segons la política de privadesa (GDPR).
+                      </label>
+                    </div>
+                  </div>
+
+                  <p className="mt-0.5 text-sm text-gray-500 text-left">
                     El pagament es realitzarà posteriorment. Se t'enviarà un correu amb els detalls.
                   </p>
 
