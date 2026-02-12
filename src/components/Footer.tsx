@@ -2,7 +2,7 @@ import { Mail, Instagram, Phone } from 'lucide-react';
 
 export const Footer = () => {
   return (
-    <footer className="w-full bg-brand-900 pt-24 pb-12 px-6 overflow-hidden relative">
+    <footer id="contact" className="w-full bg-brand-900 pt-24 pb-12 px-6 overflow-hidden relative">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 

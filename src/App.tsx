@@ -1,5 +1,6 @@
 import { Header } from './components/Header';
 import { InfoSection } from './components/InfoSection';
+import { AboutSection } from './components/AboutSection';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
 import { Cart } from './components/Cart';
@@ -11,14 +12,22 @@ function App() {
   const { toggleCart, cartCount } = useCart();
 
   return (
-    <div className="min-h-screen bg-white font-sans relative">
+    <div className="min-h-screen bg-brand-50 font-sans relative">
       <Header />
-      <main className="container mx-auto">
-        <div className="mt-8">
+      <main>
+        <div id="about">
+          <AboutSection />
+        </div>
+
+        <div id="info">
           <InfoSection />
         </div>
-        <div className="mt-12">
-          <ProductGrid />
+
+        <div id="menu">
+          <div className="container mx-auto px-6 py-12">
+            <h2 className="font-serif text-5xl md:text-6xl text-brand-900 mb-12 text-center">El nostre <span className="italic text-brand-400">Menú</span></h2>
+            <ProductGrid />
+          </div>
         </div>
       </main>
       <Footer />
@@ -26,12 +35,12 @@ function App() {
       {/* Floating Cart Button */}
       <button
         onClick={toggleCart}
-        className="fixed bottom-6 right-6 bg-yellow-400 hover:bg-yellow-300 text-gray-900 p-4 rounded-full shadow-lg z-40 flex items-center justify-center transition-transform hover:scale-105 cursor-pointer"
+        className="fixed bottom-6 right-6 bg-gold-400 hover:bg-white text-brand-900 p-4 rounded-full shadow-2xl z-40 flex items-center justify-center transition-all hover:scale-110 cursor-pointer border border-white/20 active:scale-95"
         aria-label="Obrir cistella"
       >
         <ShoppingCart size={24} />
         {cartCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white">
+          <span className="absolute -top-1 -right-1 bg-brand-900 text-white text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-white animate-in zoom-in duration-300">
             {cartCount}
           </span>
         )}
