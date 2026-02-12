@@ -136,11 +136,7 @@ export const Header: React.FC = () => {
 
           {/* Floating Badge / Logo */}
           <div className="hidden lg:flex flex-col items-center bg-white/5 backdrop-blur-md border border-white/10 p-10 rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 animate-in zoom-in duration-1000">
-            <svg width="120" height="84" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-24 h-18 text-gold-400 mb-4">
-              <rect x="2" y="2" width="70" height="50" rx="8" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="3" />
-              <path d="M72 25H85C87.7614 25 90 27.2386 90 30V35C90 37.7614 87.7614 40 85 40H72V25Z" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="3" />
-              <circle cx="82" cy="32.5" r="3.5" fill="none" stroke="currentColor" strokeWidth="2" />
-            </svg>
+            <img src="/logo.png" alt="Logo" className="w-24 h-auto text-gold-400 mb-4" />
             <p className="text-white/80 font-script text-2xl">L'Ametlla del Vallès</p>
           </div>
         </div>
