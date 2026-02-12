@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import { products } from '../data/products';
 import { X, Minus, Plus, Trash2, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { sendTelegramMessage } from '../services/telegram';
 
 export const Cart: React.FC = () => {
   const {
@@ -54,8 +55,8 @@ export const Cart: React.FC = () => {
         const details = getProductDetails(item.id);
         return details
           ? `${item.quantity}x ${details.name} (${details.price.toFixed(2)}€) = ${(
-              item.quantity * details.price
-            ).toFixed(2)}€`
+            item.quantity * details.price
+          ).toFixed(2)}€`
           : '';
       })
       .filter(Boolean)
@@ -71,13 +72,32 @@ export const Cart: React.FC = () => {
       admin_email: import.meta.env.VITE_ADMIN_EMAIL,
     };
 
+    // Construct Telegram message
+    const telegramMessage = `
+<b>Nova Comanda Rebuda! 🛒</b>
+
+<b>Client:</b> ${formData.name}
+<b>Email:</b> ${formData.email}
+<b>Telèfon:</b> ${formData.phone}
+<b>Comentaris:</b> ${formData.comments || 'Cap'}
+
+<b>Comanda:</b>
+${itemsList}
+
+<b>Total: ${cartTotal.toFixed(2)}€</b>
+    `.trim();
+
     try {
+      // Send Email
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
+
+      // Send Telegram (fire and forget, don't block on error)
+      sendTelegramMessage(telegramMessage).catch(err => console.error('Telegram error:', err));
 
       setIsSubmitted(true);
       clearCart();
