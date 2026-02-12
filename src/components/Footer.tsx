@@ -19,7 +19,7 @@ export const Footer = () => {
 
             <div className="flex items-center gap-6">
               <a
-                href="https://instagram.com/latecador3"
+                href="https://www.instagram.com/latecador3/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold-400 hover:text-brand-900 transition-all duration-300 hover:-translate-y-1"
