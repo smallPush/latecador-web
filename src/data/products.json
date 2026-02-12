@@ -96,6 +96,10 @@
     "featured": false,
     "imagePlaceholderColor": "bg-yellow-300",
     "image": "/images/entrepans.png",
+    "images": [
+      "/images/entrepans.png",
+      "/images/entrepans2.png"
+    ],
     "items": [
       {
         "id": "entrepans-minis",
@@ -245,6 +249,10 @@
     "featured": true,
     "imagePlaceholderColor": "bg-yellow-50",
     "image": "/images/alfajores.png",
+    "images": [
+      "/images/alfajores.png",
+      "/images/alfajores2.png"
+    ],
     "items": [
       {
         "id": "alfajores-unitat",
@@ -293,6 +301,10 @@
     "featured": true,
     "imagePlaceholderColor": "bg-orange-100",
     "image": "/images/pasta_frola.png",
+    "images": [
+      "/images/pasta_frola.png",
+      "/images/pasta_frola2.png"
+    ],
     "extraInfo": "Dolç típic argentí de codony\n21,50€/unitat",
     "items": [
       {

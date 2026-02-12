@@ -11,6 +11,7 @@ export interface Product {
   id: string;
   title: string;
   image?: string;
+  images?: string[];
   imagePlaceholderColor: string;
   featured?: boolean;
   items: ProductItem[];
