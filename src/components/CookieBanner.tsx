@@ -12,6 +12,9 @@ export const CookieBanner: React.FC = () => {
 
   const handleAccept = () => {
     localStorage.setItem('cookie-consent', 'accepted');
+    import('../utils/analytics').then(({ initGA }) => {
+      initGA();
+    });
     setIsVisible(false);
   };
 
