@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, type ReactNode, useMemo } from 'react';
-import { products, type ProductItem } from '../data/products';
+import { products, productItemsMap, type ProductItem } from '../data/products';
 
 interface CartItem {
   id: string;
@@ -63,11 +63,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Helper to find product details by variant ID
   const getProductDetails = (variantId: string): ProductItem | undefined => {
-    for (const product of products) {
-      const variant = product.items.find(item => item.id === variantId);
-      if (variant) return variant;
-    }
-    return undefined;
+    return productItemsMap.get(variantId);
   };
 
   const cartTotal = useMemo(() => {
