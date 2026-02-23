@@ -30,11 +30,11 @@ describe("sendTelegramMessage", () => {
   });
 
   test("should send message successfully", async () => {
-    const mockFetch = spyOn(global, "fetch").mockImplementation(() =>
+    const mockFetch = spyOn(global, "fetch").mockImplementation((() =>
       Promise.resolve(new Response(JSON.stringify({ ok: true }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
-      }))
+      }))) as any
     );
 
     await sendTelegramMessage("Hello Test");
@@ -54,7 +54,7 @@ describe("sendTelegramMessage", () => {
 
   test("should warn if configuration is missing", async () => {
     delete process.env.VITE_TELEGRAM_BOT_TOKEN;
-    const mockFetch = spyOn(global, "fetch").mockImplementation(() => Promise.resolve(new Response()));
+    const mockFetch = spyOn(global, "fetch").mockImplementation((() => Promise.resolve(new Response())) as any);
 
     await sendTelegramMessage("Hello Test");
 
@@ -66,11 +66,11 @@ describe("sendTelegramMessage", () => {
 
   test("should log error if response is not ok", async () => {
     const errorData = { error_code: 400, description: "Bad Request" };
-    spyOn(global, "fetch").mockImplementation(() =>
+    spyOn(global, "fetch").mockImplementation((() =>
       Promise.resolve(new Response(JSON.stringify(errorData), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
-      }))
+      }))) as any
     );
 
     await sendTelegramMessage("Hello Test");
@@ -83,7 +83,7 @@ describe("sendTelegramMessage", () => {
 
   test("should log error if fetch throws", async () => {
     const error = new Error("Network failure");
-    spyOn(global, "fetch").mockImplementation(() => Promise.reject(error));
+    spyOn(global, "fetch").mockImplementation((() => Promise.reject(error)) as any);
 
     await sendTelegramMessage("Hello Test");
 
