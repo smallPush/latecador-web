@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { products } from '../data/products';
+import { productItemsMap } from '../data/products';
 import { X, Minus, Plus, Trash2, Loader2, ShoppingBag, CheckCircle2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { sendTelegramMessage } from '../services/telegram';
@@ -32,11 +32,7 @@ export const Cart: React.FC = () => {
   if (!isCartOpen) return null;
 
   const getProductDetails = (id: string) => {
-    for (const product of products) {
-      const variant = product.items.find((item) => item.id === id);
-      if (variant) return { ...variant, image: product.image };
-    }
-    return null;
+    return productItemsMap.get(id) || null;
   };
 
   const handleInputChange = (
