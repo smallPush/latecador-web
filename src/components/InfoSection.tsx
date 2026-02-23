@@ -2,6 +2,22 @@
 import React from 'react';
 import { Clock, MapPin, Sparkles } from 'lucide-react';
 
+interface FeatureCardProps {
+  icon: React.ElementType;
+  title: string;
+  children: React.ReactNode;
+}
+
+const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, title, children }) => (
+  <div className="bg-white p-8 rounded-3xl shadow-sm border border-brand-100 flex flex-col items-center text-center group hover:shadow-md transition-shadow">
+    <div className="w-16 h-16 rounded-2xl bg-brand-100 flex items-center justify-center mb-6 border border-brand-200 group-hover:bg-gold-400/20 transition-colors">
+      <Icon className="w-8 h-8 text-brand-600 group-hover:text-gold-500 transition-colors" strokeWidth={1.5} />
+    </div>
+    <h4 className="font-serif text-2xl mb-4">{title}</h4>
+    {children}
+  </div>
+);
+
 export const InfoSection: React.FC = () => {
   return (
     <section className="max-w-6xl mx-auto px-6 py-20">
@@ -16,42 +32,30 @@ export const InfoSection: React.FC = () => {
         </div>
 
         {/* Feature 1: Schedule */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-brand-100 flex flex-col items-center text-center group hover:shadow-md transition-shadow">
-          <div className="w-16 h-16 rounded-2xl bg-brand-100 flex items-center justify-center mb-6 border border-brand-200 group-hover:bg-gold-400/20 transition-colors">
-            <Clock className="w-8 h-8 text-brand-600 group-hover:text-gold-500 transition-colors" strokeWidth={1.5} />
-          </div>
-          <h4 className="font-serif text-2xl mb-4">Horari de recollides</h4>
+        <FeatureCard icon={Clock} title="Horari de recollides">
           <div className="space-y-1 text-brand-600">
             <p className="font-medium">Dilluns a divendres</p>
             <p>8h a 14h — 16h a 18h</p>
             <p className="pt-2 font-medium">Dissabtes</p>
             <p>9h a 14h</p>
           </div>
-        </div>
+        </FeatureCard>
 
         {/* Feature 2: Location/Pick up */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-brand-100 flex flex-col items-center text-center group hover:shadow-md transition-shadow">
-          <div className="w-16 h-16 rounded-2xl bg-brand-100 flex items-center justify-center mb-6 border border-brand-200 group-hover:bg-gold-400/20 transition-colors">
-            <MapPin className="w-8 h-8 text-brand-600 group-hover:text-gold-500 transition-colors" strokeWidth={1.5} />
-          </div>
-          <h4 className="font-serif text-2xl mb-4">Entrega a domicili</h4>
+        <FeatureCard icon={MapPin} title="Entrega a domicili">
           <p className="text-brand-600 leading-relaxed">
             Pots recollir la comanda al nostre obrador o t'ho portem a qualsevol punt del
             <span className="font-bold"> Vallès Oriental</span> per només <span className="font-bold">0,50€/km</span>.
           </p>
-        </div>
+        </FeatureCard>
 
         {/* Feature 3: Homemade */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-brand-100 flex flex-col items-center text-center group hover:shadow-md transition-shadow">
-          <div className="w-16 h-16 rounded-2xl bg-brand-100 flex items-center justify-center mb-6 border border-brand-200 group-hover:bg-gold-400/20 transition-colors">
-            <Sparkles className="w-8 h-8 text-brand-600 group-hover:text-gold-500 transition-colors" strokeWidth={1.5} />
-          </div>
-          <h4 className="font-serif text-2xl mb-4">Producte casolà</h4>
+        <FeatureCard icon={Sparkles} title="Producte casolà">
           <p className="text-brand-600 leading-relaxed">
             Fruit de la nostra passió pels fogons i l'amor per la cuina.
             Tot el producte és d'elaboració pròpia.
           </p>
-        </div>
+        </FeatureCard>
       </div>
     </section>
   );
