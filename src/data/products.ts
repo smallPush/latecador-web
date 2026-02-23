@@ -24,11 +24,11 @@ export interface ProductItemDetails extends ProductItem {
   image?: string;
 }
 
-export const productItemsMap: Map<string, ProductItemDetails> = new Map(
-  products.flatMap((product) =>
-    product.items.map((item) => [
-      item.id,
-      { ...item, image: product.image },
-    ])
-  )
-);
+const map = new Map<string, ProductItemDetails>();
+for (const product of products) {
+  for (const item of product.items) {
+    map.set(item.id, { ...item, image: product.image });
+  }
+}
+
+export const productItemsMap = map;
