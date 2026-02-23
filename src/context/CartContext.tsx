@@ -61,7 +61,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return cartItems.find(item => item.id === id)?.quantity || 0;
   };
 
-  // Helper to find product details by variant ID
+  // Helper to find product details by variant ID (O(1) lookup)
   const getProductDetails = (variantId: string): ProductItem | undefined => {
     return productItemsMap.get(variantId);
   };
