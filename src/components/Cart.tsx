@@ -4,6 +4,7 @@ import { products } from '../data/products';
 import { X, Minus, Plus, Trash2, Loader2, ShoppingBag, CheckCircle2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { sendTelegramMessage } from '../services/telegram';
+import { escapeHtml } from '../utils/security';
 
 export const Cart: React.FC = () => {
   const {
@@ -81,13 +82,13 @@ export const Cart: React.FC = () => {
     const telegramMessage = `
 <b>Nova Comanda Rebuda! 🛒</b>
 
-<b>Client:</b> ${formData.name}
-<b>Email:</b> ${formData.email}
-<b>Telèfon:</b> ${formData.phone}
-<b>Comentaris:</b> ${formData.comments || 'Cap'}
+<b>Client:</b> ${escapeHtml(formData.name)}
+<b>Email:</b> ${escapeHtml(formData.email)}
+<b>Telèfon:</b> ${escapeHtml(formData.phone)}
+<b>Comentaris:</b> ${escapeHtml(formData.comments || 'Cap')}
 
 <b>Comanda:</b>
-${itemsList}
+${escapeHtml(itemsList)}
 
 <b>Total: ${cartTotal.toFixed(2)}€</b>
     `.trim();
