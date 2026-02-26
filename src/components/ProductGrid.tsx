@@ -162,8 +162,8 @@ export const ProductGrid: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 pb-20">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        {products.map((product, index) => (
-          <div key={index} className="flex flex-col items-center">
+        {products.map((product) => (
+          <div key={product.title} className="flex flex-col items-center">
             {/* Top Line */}
             <div className="w-24 h-1 bg-yellow-400 mb-6"></div>
 
@@ -195,8 +195,8 @@ export const ProductGrid: React.FC = () => {
 
             {/* Items List */}
             <ul className="text-center space-y-2 mb-4">
-              {product.items.map((item, idx) => (
-                <li key={idx} className="text-gray-800">
+              {product.items.map((item) => (
+                <li key={item.name} className="text-gray-800">
                   <span className="font-medium">• {item.name}</span>
                   {item.price && (
                     <div className="text-blue-400 font-bold text-sm">{item.price}</div>
