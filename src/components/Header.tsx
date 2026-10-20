@@ -169,7 +169,7 @@ export const Header: React.FC = () => {
                 <div className="h-10 w-px bg-white/20 hidden md:block"></div>
                 <div className="flex flex-col">
                   <span className="text-gold-400 font-bold uppercase tracking-widest text-xs mb-1">Contacte</span>
-                  <a href="tel:+34654840968" className="text-white font-bold text-3xl hover:text-gold-400 transition-colors">654 84 09 68</a>
+                  <a href="tel:+34659733053" className="text-white font-bold text-3xl hover:text-gold-400 transition-colors">659 73 30 53</a>
                 </div>
               </div>
             </div>

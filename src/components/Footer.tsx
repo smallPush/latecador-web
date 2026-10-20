@@ -47,8 +47,8 @@ export const Footer = () => {
               </span>
               <div className="flex flex-col gap-2">
                 <p className="text-brand-300 text-sm uppercase tracking-widest font-bold">Contacte directe</p>
-                <a href="tel:+34654840968" className="text-4xl md:text-5xl font-serif text-white hover:text-gold-400 transition-colors">
-                  654 84 09 68
+                <a href="tel:+34659733053" className="text-4xl md:text-5xl font-serif text-white hover:text-gold-400 transition-colors">
+                  659 73 30 53
                 </a>
                 <p className="font-script text-2xl text-brand-200 mt-2">Atenció personalitzada per l'Anna</p>
               </div>
