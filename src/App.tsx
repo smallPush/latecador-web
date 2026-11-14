@@ -8,6 +8,7 @@ import { Footer } from './components/Footer';
 import { Cart } from './components/Cart';
 import { CookieBanner } from './components/CookieBanner';
 import { Specialties } from './components/Specialties';
+import { AlfajoresPromo } from './components/AlfajoresPromo';
 import { useCart } from './context/CartContext';
 import { ShoppingCart } from 'lucide-react';
 
@@ -37,6 +38,7 @@ function ScrollToTop() {
 function HomePage() {
   return (
     <main>
+      <AlfajoresPromo />
       <div id="about">
         <AboutSection />
       </div>
